@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10秒を狙え</title>
+    <style>
+      #time{
+          font-size: 200px;
+          text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="display" onclick="tap()">
+      <div id="time">0.000</div>
+      <center>スペース押下又は画面タップで　スタート/ストップ/リセット</center>
+    </div>
+    <script>
+      var timer;
+      var count = 0;
+      var time_s = 0;
+      var cheat = false;
+      document.addEventListener("keydown", function (event) {
+        if (event.key == "z") {
+          cheat = true;
+        }
+        if (event.key == " " || event.key == "　") {
+          if (count == 0) {
+            timer = setInterval(time, 0);
+            count = 1;
+          } else if (count == 1) {
+            clearInterval(timer);
+            if (!cheat) {
+              document.getElementById("time").innerHTML = (
+                time_s / 250
+              ).toFixed(3);
+            } else {
+              document.getElementById("time").innerHTML = "10.000";
+            }
+            count = 2;
+          } else if (count == 2) {
+            count = 0;
+            time_s = 0;
+            cheat = false;
+            document.getElementById("time").innerHTML = "0.000";
+          }
+        }
+      });
+
+      function time() {
+        time_s++;
+        if (time_s / 250 > 3) {
+          document.getElementById("time").innerHTML = "?.???";
+        } else {
+          document.getElementById("time").innerHTML = (time_s / 250).toFixed(3);
+        }
+      }
+    </script>
+  </body>
+</html>
